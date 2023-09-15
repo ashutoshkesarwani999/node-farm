@@ -38,8 +38,21 @@ import http from 'http';
 // SERVER
 
 const server = http.createServer((req,res)=>{
-    console.log("Request Object",req)
-res.end('Hello from the server!')
+    console.log("Request Object",req.url)
+    const pathName = req.url
+    if(pathName =='/overview' || pathName == '/'){
+        res.end('Hello from the server!')        
+    }
+    else if(pathName == '/product'){
+        res.end('This is Product')
+    }
+    else{
+        res.writeHead(404,{
+            'Content-type':'text/html', // represents the content displayed on browser is HTML hence res.end has html tag attached
+            'my-own-header':'hello-world' // our own header to explain the error if we want to
+        });
+        res.end('<h1>Page not found!</h1>')
+    }
 
 })
  
